@@ -1,11 +1,7 @@
 name: goreleaser
 
 on:
-  pull_request:
-  push:
-    # run only against tags
-    # tags:
-    #   - '*'
+  create:
 
 permissions:
   contents: write
@@ -33,4 +29,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: development
-          path: dist/*.json
+          path: goreleaser.md
