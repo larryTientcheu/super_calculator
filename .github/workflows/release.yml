@@ -22,12 +22,12 @@ jobs:
       - uses: goreleaser/goreleaser-action@v4
         with:
           distribution: goreleaser
-          version: ${{github.ref}}
+          version: latest
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: buildArtifacts
-      #     path: artifacts.json
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: buildArtifacts
+          path: releases/*
