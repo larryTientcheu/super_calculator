@@ -61,7 +61,7 @@ Use "calculator [command] --help" for more information about a command.
 ### Division
 
 ```bash
-./calculator div --x 4 --y 5
+./calculator div --x 4 --y 
 4.000000 / 5.000000 = 0.800000
 ```
 
@@ -75,4 +75,3 @@ This application uses the default go test integration.
 ?       calculator/cmd              [no test files]
 ok      calculator/internals/math   0.002s
 ```
-WWT
