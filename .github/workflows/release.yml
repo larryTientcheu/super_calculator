@@ -56,4 +56,4 @@ jobs:
           context: .
           platforms:  linux/amd64,linux/arm64
           push: true
-          tags: ${{secrets.DOCKER_USERNAME}}/super_calculator:${{needs.release_version.outputs.release_version}}
+          tags: ${{secrets.DOCKER_USERNAME}}/${{github.event.repository.name}}:v0.0.1
