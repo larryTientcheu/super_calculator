@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: buildArtifacts ${{github.ref_name}}
-          path: ${{github.workspace}}
+          path: ${{github.workspace}}/dist/*
