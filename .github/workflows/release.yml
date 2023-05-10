@@ -4,8 +4,8 @@ on:
   pull_request:
   push:
     # run only against tags
-    tags:
-      - '*'
+    # tags:
+    #   - '*'
 
 permissions:
   contents: write
@@ -32,5 +32,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v3
         with:
-          name: gorelease-report
-          path: gorelease.html
+          name: development
+          path: dist/*.json
