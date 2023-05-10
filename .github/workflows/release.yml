@@ -26,8 +26,8 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Download all workflow rub artifacts
-        uses: actions/download-artifact@v3
-        id: download
-      - name: Echo Download path
-        run: echo ${{steps.download.outputs.download-path}}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: buildArtifacts
+          path: artifacts.json
