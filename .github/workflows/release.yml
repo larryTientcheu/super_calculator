@@ -31,12 +31,12 @@ jobs:
         with:
           name: super_calculator_build_artifacts ${{github.ref_name}}
           path: ${{github.workspace}}/dist/*
-      - name: Set Release version
-        id: release_version
-        run: |
-          echo "RELEASE_VERSION=${{github.ref_name}}" >> $GITHUB_OUTPUT
-    outputs:
-      release_version: ${{steps.release_version.outputs.RELEASE_VERSION}}
+    #   - name: Set Release version
+    #     id: release_version
+    #     run: |
+    #       echo "RELEASE_VERSION=${{github.ref_name}}" >> $GITHUB_OUTPUT
+    # outputs:
+    #   release_version: ${{steps.release_version.outputs.RELEASE_VERSION}}
 
   dockerbuild:
     needs: goreleaser
@@ -57,4 +57,4 @@ jobs:
           context: .
           platforms:  linux/amd64,linux/arm64
           push: true
-          tags: ${{secrets.DOCKER_USERNAME}}/${{github.repository}}:${{needs.release_version.outputs.release_version}}
+          tags: ${{secrets.DOCKER_USERNAME}}/${{github.repository.name}}:${{github.ref_name}}
