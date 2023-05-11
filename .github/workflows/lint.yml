@@ -21,7 +21,7 @@ jobs:
               #uses: returntocorp/semgrep-action@v1
               run: semgrep ci --sarif --output=semgrep.sarif
               env:
-                SEMGREP_RULES: p/defai;t
+                SEMGREP_RULES: p/default
               # with:
               #   config: p/default
             - name: Upload SARIF file for CodeQL
