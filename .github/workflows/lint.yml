@@ -21,15 +21,11 @@ jobs:
               uses: returntocorp/semgrep-action@v1
               with:
                 config: p/default
-            # - name: Upload SARIF file for CodeQL
-            #   uses: github/codeql-action/upload-sarif@v2
-            #   if: always()
-            #   with:
-            #     sarif_file: semgrep.sarif
            
     
     hadolint:
         name: Docker Lint
+        permissions: write-all
         runs-on: ubuntu-latest
 
         steps:
