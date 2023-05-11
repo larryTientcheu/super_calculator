@@ -1,3 +1,4 @@
+---
 name: lint
 
 on: [push, pull_request, workflow_dispatch]
@@ -9,6 +10,10 @@ jobs:
     semgrep:
         name: Scan
         runs-on: ubuntu-latest
+        permissions:
+          security-events: write
+        container:
+          image: returntocorp/semgrep:1.1.0
 
         steps:
             - uses: actions/checkout@v3
@@ -17,9 +22,11 @@ jobs:
               uses: returntocorp/semgrep-action@v1
               with:
                 config: p/default
+           
     
     hadolint:
         name: Docker Lint
+        permissions: write-all
         runs-on: ubuntu-latest
 
         steps:
@@ -29,16 +36,30 @@ jobs:
               uses: hadolint/hadolint-action@v3.1.0
               with:
                 dockerfile: Dockerfile
+                format: sarif
+                output-file: hadolint-results.sarif
+            - name: Upload SARIF file for CodeQL
+              uses: github/codeql-action/upload-sarif@v2
+              if: always()
+              with:
+                sarif_file: hadolint-results.sarif
+                wait-for-processing: true
 
     super-linter:
         name: Status Check on PR
         if: ${{github.event_name == 'pull_request'}}
         runs-on: ubuntu-latest
+        permissions:
+          contents: read
+          packages: read
+          statuses: write
 
         steps:
             - uses: actions/checkout@v3
+              with:
+                fetch-depth: 0
             - name: "Execute Super-Linter"
-              uses: github/super-linter/slim@v5
+              uses: github/super-linter/slim@v5.0.0
               env:
-                VALIDATE_ALL_CODEBASE: true
+                VALIDATE_ALL_CODEBASE: false
                 GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
