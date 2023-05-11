@@ -9,14 +9,26 @@ jobs:
     semgrep:
         name: Scan
         runs-on: ubuntu-latest
+        permissions:
+          security-events: write
+        container:
+          image: returntocorp/semgrep:1.1.0
 
         steps:
             - uses: actions/checkout@v3
 
             - name: "Execute Semgrep"
-              uses: returntocorp/semgrep-action@v1
+              #uses: returntocorp/semgrep-action@v1
+              run: semgrep ci --sarif --output=semgrep.sarif
+              env:
+                SEMGREP_RULES: p/defai;t
+              # with:
+              #   config: p/default
+            - name: Upload SARIF file for CodeQL
+              uses: github/codeql-action/upload-sarif@v2
+              if: always()
               with:
-                config: p/default
+                sarif_file: semgrep.sarif
     
     hadolint:
         name: Docker Lint
