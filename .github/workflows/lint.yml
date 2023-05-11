@@ -7,14 +7,33 @@ permissions:
 
 jobs:
     semgrep:
+        name: Scan
         runs-on: ubuntu-latest
-        container:
-            image: returntocorp/semgrep:1.1.0
-        if: (github.actor != 'dependabot[bot]')
+
         steps:
             - uses: actions/checkout@v3
 
             - name: "Execute Semgrep"
-              run: semgrep ci
+              uses: returntocorp/semgrep-action@v1
+              with:
+                config: p/default
+    
+    hadolint:
+        name: Docker Lint
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: hadolint/hadolint-action@v3.1.0
+              with:
+                dockerfile: Dockerfile
+
+    super-linter:
+        name: Status Check on PR
+        if: ${{github.event_name == 'pull_request'}}
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: github/super-linter/slim@v5
               env:
-                    SEMGREP_RULES: p/default
+                VALIDATE_ALL_CODEBASE: true
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
