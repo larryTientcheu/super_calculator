@@ -1,0 +1,44 @@
+name: lint
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+    contents: write
+
+jobs:
+    semgrep:
+        name: Scan
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: "Execute Semgrep"
+              uses: returntocorp/semgrep-action@v1
+              with:
+                config: p/default
+    
+    hadolint:
+        name: Docker Lint
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: "Execute Hadolint"
+              uses: hadolint/hadolint-action@v3.1.0
+              with:
+                dockerfile: Dockerfile
+
+    super-linter:
+        name: Status Check on PR
+        if: ${{github.event_name == 'pull_request'}}
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: "Execute Super-Linter"
+              uses: github/super-linter/slim@v5
+              env:
+                VALIDATE_ALL_CODEBASE: true
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

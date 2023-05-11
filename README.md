@@ -40,28 +40,28 @@ Use "calculator [command] --help" for more information about a command.
 ### Addition
 
 ```bash
-./calculator add --x 5 4
+./calculator add --x 5 --y 4
 4.000000 + 5.000000 = 9.000000
 ```
 
 ### Subtraction
 
 ```bash
-./calculator sub --x 5 4
+./calculator sub --x 4 --y 5
 4.000000 - 5.000000 = -1.000000
 ```
 
 ### Multiplication
 
 ```bash
-./calculator mul --x 5 4
+./calculator mul --x 4 --y 5
 4.000000 * 5.000000 = 20.000000
 ```
 
 ### Division
 
 ```bash
-./calculator div --x 5 4
+./calculator div --x 4 --y 
 4.000000 / 5.000000 = 0.800000
 ```
 
