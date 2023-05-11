@@ -11,7 +11,7 @@ COPY . .
 RUN go build -o /calculator
 
 # This is obtained from https://hub.docker.com/r/gcriodistroless/base-debian10/tags
-FROM gcr.io/distroless/base-debian10
+FROM gcr.io/distroless/base-debian10:nonroot
 
 WORKDIR /
 
